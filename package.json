@@ -1,0 +1,15 @@
+{
+    "name": "project_name",
+    "version": "",
+    "description": "",
+    "repository": {
+        "url": "",
+        "type": "git"
+    },
+    "author": "Your name <your@email.com>",
+    "license": "license",
+    "keywords": [],
+    "homepage": "",
+    "bugs": "",
+    "contributors": []
+}
