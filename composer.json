@@ -15,6 +15,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "league/climate": "^3.6"
     },
     "autoload": {
         "psr-4": {
