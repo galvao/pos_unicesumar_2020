@@ -3,6 +3,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/conn.php';
 
 use League\CLImate\CLImate;
+use Application\Model\{
+    User,
+    Category
+};
+
+use Application\TableGateway\CRUD;
 
 /**
  * IV e KEY foram geradas externamente através do uso da random_bytes
@@ -17,6 +23,15 @@ use League\CLImate\CLImate;
 
 define('IV', '8c3cb75c190200348d2e47affe627ead1eba88ed9dee05d0');
 define('KEY', '8b780ccf57d11b9495c2311dde3ca6fcb355c3199f7fa139609454d34b5f7f82');
+
+$user = new User(1, 'galvao@php.net', 'hasasasj', new DateTime());
+
+$crud = new CRUD($conn, 'user');
+$s = $crud->create($user);
+
+echo $s . PHP_EOL;
+
+die();
 
 $cli = new CLImate();
 

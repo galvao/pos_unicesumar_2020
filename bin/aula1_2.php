@@ -30,6 +30,7 @@ $sth = $conn->prepare($sql);
 $sth->bindParam(':email', $email, PDO::PARAM_STR);
 
 if (!$sth->execute()) {
+    var_dump($sth->debugDumpParams());
     die(implode(',', $sth->errorInfo()));
 }
 
@@ -43,13 +44,16 @@ function auth($email, $senha, $registro)
 
         if ($email == $emailGravado) {
             if (password_verify($senha, $senhaGravada)) {
-                $emailRevelado = sodium_crypto_secretbox_open(
-                    base64_decode($email),
-                    hex2bin(IV), 
-                    hex2bin(KEY)
-                );
+                /**
+                 * Exemplo de descriptografia com a Sodium
+                 *
+                 * $emailRevelado = sodium_crypto_secretbox_open(
+                 *   base64_decode($email),
+                 *   hex2bin(IV), 
+                 *   hex2bin(KEY)
+                 );
 
-                var_dump($emailRevelado);
+                var_dump($emailRevelado);*/
 
                 return true;
             } else {
