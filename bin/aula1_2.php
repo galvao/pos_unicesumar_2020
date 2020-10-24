@@ -35,21 +35,38 @@ if (!$sth->execute()) {
 
 $registro = $sth->fetchObject();
 
-if ($registro != false) {
-    $emailGravado = $registro->email;
-    $senhaGravada = $registro->password;
+function auth($email, $senha, $registro)
+{
+    if ($registro != false) {
+        $emailGravado = $registro->email;
+        $senhaGravada = $registro->password;
 
-    if ($email == $emailGravado) {
-        if (password_verify($senha, $senhaGravada)) {
-            echo 'Bem-vindo(a)!';
+        if ($email == $emailGravado) {
+            if (password_verify($senha, $senhaGravada)) {
+                $emailRevelado = sodium_crypto_secretbox_open(
+                    base64_decode($email),
+                    hex2bin(IV), 
+                    hex2bin(KEY)
+                );
+
+                var_dump($emailRevelado);
+
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            echo 'E-mail ' . $emailRaw . ' não existe ou a senha é inválida.';
+                return false;
         }
     } else {
-        echo 'E-mail ' . $emailRaw . ' não existe ou a senha é inválida.';
+        return false;
     }
+}
+
+if (auth($email, $senha, $registro) == true) {
+    echo 'Bem-vindo(a).';
 } else {
-    echo 'E-mail ' . $emailRaw . ' não existe ou a senha é inválida.';
+    echo 'O e-mail ' , $emailRaw . ' não existe ou a senha está incorreta.';
 }
 
 echo PHP_EOL;

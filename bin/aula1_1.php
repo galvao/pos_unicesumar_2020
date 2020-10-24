@@ -8,6 +8,11 @@ use League\CLImate\CLImate;
  * IV e KEY foram geradas externamente através do uso da random_bytes
  * Como a random_bytes retorna binário elas foram passadas pela bin2hex primeiro para podermos
  * usar ambas como strings "normais"
+ *
+ * Ex. de geração de IV e Chave:
+ *
+ * $iv = bin2hex(random_bytes(24));
+ * $key = bin2Hex(random_bytes(32));
  */
 
 define('IV', '8c3cb75c190200348d2e47affe627ead1eba88ed9dee05d0');
