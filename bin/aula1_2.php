@@ -10,9 +10,11 @@ define('KEY', '8b780ccf57d11b9495c2311dde3ca6fcb355c3199f7fa139609454d34b5f7f82'
 $cli = new CLImate();
 
 $input = $cli->input('E-mail: ');
+$emailRaw = $input->prompt();
+
 $email = base64_encode(
     sodium_crypto_secretbox(
-        $input->prompt(), 
+        $emailRaw,
         hex2bin(IV), 
         hex2bin(KEY)
     )
@@ -33,17 +35,23 @@ if (!$sth->execute()) {
 
 $registro = $sth->fetchObject();
 
-$emailGravado = $registro->email;
-$senhaGravada = $registro->password;
+if ($registro != false) {
+    $emailGravado = $registro->email;
+    $senhaGravada = $registro->password;
 
-if ($email == $emailGravado) {
-    if (password_verify($senha, $senhaGravada)) {
-        echo 'Bem-vindo(a)!' . PHP_EOL;
+    if ($email == $emailGravado) {
+        if (password_verify($senha, $senhaGravada)) {
+            echo 'Bem-vindo(a)!';
+        } else {
+            echo 'E-mail ' . $emailRaw . ' não existe ou a senha é inválida.';
+        }
     } else {
-        echo 'E-mail e/ou senha inválido(s).' . PHP_EOL;
+        echo 'E-mail ' . $emailRaw . ' não existe ou a senha é inválida.';
     }
 } else {
-    echo 'E-mail e/ou senha inválido(s).' . PHP_EOL;
+    echo 'E-mail ' . $emailRaw . ' não existe ou a senha é inválida.';
 }
+
+echo PHP_EOL;
 
 $conn = null;

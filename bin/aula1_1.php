@@ -27,8 +27,7 @@ $email = base64_encode(
 $input2 = $cli->password('Senha: ');
 $senha = password_hash($input2->prompt(), PASSWORD_ARGON2ID);
 
-$now = new DateTime();
-$created = $now->format('Y-m-d H:i:s');
+$now = date('Y-m-d H:i:s');
 
 $sql = 'INSERT INTO user (email, password, created) VALUES (:email, :password, :created)';
 
